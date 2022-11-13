@@ -16,6 +16,7 @@
     "fastify": "^4.8.1"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
