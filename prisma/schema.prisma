@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id    String   @id @default(uuid())
+  login      String   @unique
+  first_name String
+  last_name  String?
+  birth_date DateTime?
+  password   String
+  type       UserType @default(user)
+  links      UserLink[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model UserLink {
+  user_link_id String   @id @default(uuid())
+  user_id      String
+  link         String
+  link_type    LinkType
+  user         User     @relation(fields: [user_id], references: [user_id])
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@map("user_links")
+}
+
+enum UserType {
+  user
+  company
+}
+
+enum LinkType {
+  VK
+  TELEGRAM
+  YOUTUBE
+  WHATS_APP
+  VIBER
+  OTHER
+}
