@@ -1,8 +1,8 @@
-import {getDbProvider} from "../../infrastructure/provider";
-import {User} from "../../model/user";
-import {getBcryptPassword} from "../../../core/application/BcryptPassword";
+import {getDbProvider} from '../../infrastructure/provider'
+import {User} from '../../model/user'
+import {getBcryptPassword} from '../../../core/application/BcryptPassword'
 
-const provider = getDbProvider();
+const provider = getDbProvider()
 
 async function createUser(user: User): Promise<boolean> {
     if (!user.login || await provider.user.getUserByLogin(user.login)) {
@@ -27,5 +27,5 @@ async function checkUser(user: User): Promise<boolean> {
 
 export {
     createUser,
-    checkUser,
+    checkUser
 }

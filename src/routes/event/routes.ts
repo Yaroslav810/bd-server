@@ -1,17 +1,17 @@
-import {FastifyInstance} from "fastify/types/instance"
-import {getScheme} from "./schemes"
-import {createEvent, getEvents} from "../../modules/event/actions"
+import {FastifyInstance} from 'fastify/types/instance'
+import {getScheme} from './schemes'
+import {createEvent, getEvents} from '../../modules/event/actions'
 
-function event(fastify: FastifyInstance, _: RegistrationOptions, done: Function) {
+function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
     fastify.post('/create', {
-        schema: getScheme,
+        schema: getScheme
     }, async () => {
         return await createEvent()
     })
 
     fastify.get('/get', {
-        schema: getScheme,
+        schema: getScheme
     }, async () => {
         return await getEvents()
     })
@@ -20,6 +20,6 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: Function)
 }
 
 export {
-    event,
+    event
 }
 

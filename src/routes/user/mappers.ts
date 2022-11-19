@@ -1,5 +1,5 @@
-import {User, UserType} from "../../model/user";
-import {AuthenticationDto, RegistrationDto, RegistrationTypeDto} from "./schemes";
+import {User, UserType} from '../../model/user'
+import {AuthenticationDto, RegistrationDto, RegistrationTypeDto} from './schemes'
 
 function mapRegistrationTypeDtoToUserType(registrationType: RegistrationTypeDto): UserType {
     switch (registrationType) {
@@ -17,7 +17,7 @@ function mapRegistrationDtoToUser(registrationTypeDto: RegistrationDto): User {
         last_name: registrationTypeDto.last_name || null,
         birth_date: registrationTypeDto.birth_date || null,
         password: registrationTypeDto.password,
-        type: mapRegistrationTypeDtoToUserType(registrationTypeDto.type),
+        type: mapRegistrationTypeDtoToUserType(registrationTypeDto.type)
     }
 }
 
@@ -28,11 +28,11 @@ function mapAuthenticationDtoToUser(authenticationDto: AuthenticationDto): User 
         first_name: '',
         last_name: null,
         birth_date: null,
-        type: UserType.user,
+        type: UserType.user
     }
 }
 
 export {
     mapRegistrationDtoToUser,
-    mapAuthenticationDtoToUser,
+    mapAuthenticationDtoToUser
 }

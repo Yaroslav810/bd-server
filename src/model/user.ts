@@ -14,5 +14,5 @@ interface User {
 
 export {
     type User,
-    UserType,
+    UserType
 }

@@ -1,9 +1,9 @@
-import {HttpStatus} from "./HttpStatus";
-import {HttpError} from "./HttpError";
+import {HttpStatus} from './HttpStatus'
+import {HttpError} from './HttpError'
 
 export function verifyExisting<T>(item: null|T): T {
     if (!item) {
-        throw new HttpError(HttpStatus.NOT_FOUND, "Not found")
+        throw new HttpError(HttpStatus.NOT_FOUND, 'Not found')
     }
     return item
 }
@@ -15,7 +15,7 @@ export function verifyParameter<T>(parametr: T|null, message: string): T {
     return parametr
 }
 
-export function sendUnauthorized(message = "Unauthorized"): never {
+export function sendUnauthorized(message = 'Unauthorized'): never {
     throw new HttpError(HttpStatus.UNAUTHORIZED, message)
 }
 

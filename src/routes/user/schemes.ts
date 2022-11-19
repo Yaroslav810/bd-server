@@ -24,7 +24,7 @@ const registrationScheme = {
             password: {type: 'string'},
             type: {
                 type: 'string',
-                enum: ['user', 'company'],
+                enum: ['user', 'company']
             }
         }
     }
@@ -41,7 +41,7 @@ const authenticationScheme = {
         required: ['login', 'password'],
         properties: {
             login: {type: 'string'},
-            password: {type: 'string'},
+            password: {type: 'string'}
         }
     }
 }
@@ -52,5 +52,5 @@ export {
     registrationScheme,
 
     type AuthenticationDto,
-    authenticationScheme,
+    authenticationScheme
 }

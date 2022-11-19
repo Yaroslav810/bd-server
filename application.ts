@@ -1,7 +1,7 @@
 import Fastify from 'fastify'
 import Bcrypt from 'fastify-bcrypt'
-import {user} from "./src/routes/user/routes"
-import {event} from "./src/routes/event/routes";
+import {user} from './src/routes/user/routes'
+import {event} from './src/routes/event/routes'
 
 function application() {
     const fastify = Fastify({
@@ -19,12 +19,12 @@ function application() {
     })
 
     fastify.register(user, {
-        prefix: "/user",
-    } as RegistrationOptions);
+        prefix: '/user'
+    } as RegistrationOptions)
 
     fastify.register(event, {
-        prefix: "/event",
-    } as RegistrationOptions);
+        prefix: '/event'
+    } as RegistrationOptions)
 
     return fastify
 }

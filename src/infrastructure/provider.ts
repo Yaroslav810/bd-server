@@ -1,6 +1,6 @@
 import {getPrismaContext} from './context'
 import {initUserRepository} from './repositories/user/user'
-import {initEventRepository} from "./repositories/event/event";
+import {initEventRepository} from './repositories/event/event'
 
 class DbProvider {
     private _dbContext = getPrismaContext()
@@ -9,7 +9,7 @@ class DbProvider {
     readonly event = initEventRepository(this._dbContext)
 }
 
-let dbProvider = new DbProvider();
+const dbProvider = new DbProvider()
 
 function getDbProvider() {
     return dbProvider

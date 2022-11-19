@@ -1,6 +1,6 @@
 import {settings} from './core/Settings'
 import {application} from './application'
-import {initApplication} from "./core/application/init";
+import {initApplication} from './core/application/init'
 
 const app = application()
 const start = async () => {

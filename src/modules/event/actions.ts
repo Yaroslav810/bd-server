@@ -1,8 +1,8 @@
-import {getDbProvider} from "../../infrastructure/provider"
-import {GetEventDto} from "../../routes/event/schemes";
-import {mapEventEntityToEventDto} from "../../routes/event/mappers";
+import {getDbProvider} from '../../infrastructure/provider'
+import {GetEventDto} from '../../routes/event/schemes'
+import {mapEventEntityToEventDto} from '../../routes/event/mappers'
 
-const provider = getDbProvider();
+const provider = getDbProvider()
 
 async function createEvent(): Promise<boolean> {
     await provider.event.create()
@@ -20,7 +20,7 @@ async function getEvents(): Promise<Array<GetEventDto>> {
                 event,
                 user.login,
                 0,
-                false,
+                false
             ))
         }
     }
@@ -29,5 +29,5 @@ async function getEvents(): Promise<Array<GetEventDto>> {
 
 export {
     createEvent,
-    getEvents,
+    getEvents
 }

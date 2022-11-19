@@ -16,7 +16,7 @@ class EventRepository extends BaseRepository {
                 duration: 0,
                 user_id: 'd8beac63-9c83-4e3c-9485-7069988b9f4c',
                 participants_count: 0,
-                price: undefined,
+                price: undefined
             }
         })
     }

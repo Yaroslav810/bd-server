@@ -14,5 +14,5 @@ const getScheme = {}
 
 export {
     type GetEventDto,
-    getScheme,
+    getScheme
 }

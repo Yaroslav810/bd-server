@@ -1,5 +1,5 @@
-import {EventEntity} from "../../infrastructure/repositories/event/types";
-import {GetEventDto} from "./schemes";
+import {EventEntity} from '../../infrastructure/repositories/event/types'
+import {GetEventDto} from './schemes'
 
 function mapEventEntityToEventDto(
     event: EventEntity,
@@ -16,10 +16,10 @@ function mapEventEntityToEventDto(
         duration: event.duration,
         price: event.price || undefined,
         participants_count: participantsCount,
-        is_like_set: isLikeSet,
+        is_like_set: isLikeSet
     }
 }
 
 export {
-    mapEventEntityToEventDto,
+    mapEventEntityToEventDto
 }

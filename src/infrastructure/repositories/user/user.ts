@@ -22,7 +22,7 @@ class UserRepository extends BaseRepository {
     async getUserById(user_id: string): Promise<UserEntity | null> {
         return await this.dbContext.user.findUnique({
             where: {
-                user_id,
+                user_id
             }
         })
     }
@@ -30,7 +30,7 @@ class UserRepository extends BaseRepository {
     async getUserByLogin(login: string): Promise<UserEntity | null> {
         return await this.dbContext.user.findUnique({
             where: {
-                login,
+                login
             }
         })
     }

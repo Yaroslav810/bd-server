@@ -15,7 +15,7 @@ class BcryptPassword {
         return this.bcrypt.compare(data, hash)
     }
 
-    private readonly bcrypt: BcryptPasswordType;
+    private readonly bcrypt: BcryptPasswordType
 }
 
 function initBcryptPassword(bcrypt: BcryptPasswordType) {
@@ -24,12 +24,12 @@ function initBcryptPassword(bcrypt: BcryptPasswordType) {
 
 function getBcryptPassword() {
     if (!bcryptPassword) {
-        throw Error();
+        throw Error()
     }
     return bcryptPassword
 }
 
 export {
     initBcryptPassword,
-    getBcryptPassword,
+    getBcryptPassword
 }
