@@ -1,16 +1,22 @@
 import {FastifyInstance} from "fastify/types/instance";
-import {registrationScheme, RegistrationDto} from "./schemes";
-import {createUser} from "../../modules/user/createUser";
-import {mapUserDtoToUser} from "./mappers";
+import {registrationScheme, RegistrationDto, authenticationScheme, AuthenticationDto} from "./schemes";
+import {checkUser, createUser} from "../../modules/user/createUser";
+import {mapAuthenticationDtoToUser, mapRegistrationDtoToUser} from "./mappers";
 
 function user(fastify: FastifyInstance, _: RegistrationOptions, done: Function) {
 
     fastify.post('/registration', {
         schema: registrationScheme,
     }, async (request) => {
-        const user = mapUserDtoToUser(request.body as RegistrationDto)
-        user.password = await fastify.bcrypt.hash(user.password)
+        const user = mapRegistrationDtoToUser(request.body as RegistrationDto)
         return await createUser(user)
+    })
+
+    fastify.post('/authentication', {
+        schema: authenticationScheme,
+    }, async (request) => {
+        const user = mapAuthenticationDtoToUser(request.body as AuthenticationDto)
+        return await checkUser(user)
     })
 
     done()

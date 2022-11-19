@@ -1,8 +1,8 @@
 import {User, UserType} from "../../model/user";
-import {RegistrationDto, RegistrationTypeDto} from "./schemes";
+import {AuthenticationDto, RegistrationDto, RegistrationTypeDto} from "./schemes";
 
-function mapUserTypeDtoToUserType(userType: RegistrationTypeDto): UserType {
-    switch (userType) {
+function mapRegistrationTypeDtoToUserType(registrationType: RegistrationTypeDto): UserType {
+    switch (registrationType) {
         case RegistrationTypeDto.company:
             return UserType.company
         case RegistrationTypeDto.user:
@@ -10,17 +10,29 @@ function mapUserTypeDtoToUserType(userType: RegistrationTypeDto): UserType {
     }
 }
 
-function mapUserDtoToUser(userDto: RegistrationDto): User {
+function mapRegistrationDtoToUser(registrationTypeDto: RegistrationDto): User {
     return {
-        login: userDto.login,
-        first_name: userDto.first_name,
-        last_name: userDto.last_name || null,
-        birth_date: userDto.birth_date || null,
-        password: userDto.password,
-        type: mapUserTypeDtoToUserType(userDto.type),
+        login: registrationTypeDto.login,
+        first_name: registrationTypeDto.first_name,
+        last_name: registrationTypeDto.last_name || null,
+        birth_date: registrationTypeDto.birth_date || null,
+        password: registrationTypeDto.password,
+        type: mapRegistrationTypeDtoToUserType(registrationTypeDto.type),
+    }
+}
+
+function mapAuthenticationDtoToUser(authenticationDto: AuthenticationDto): User {
+    return {
+        login: authenticationDto.login,
+        password: authenticationDto.password,
+        first_name: '',
+        last_name: null,
+        birth_date: null,
+        type: UserType.user,
     }
 }
 
 export {
-    mapUserDtoToUser,
+    mapRegistrationDtoToUser,
+    mapAuthenticationDtoToUser,
 }

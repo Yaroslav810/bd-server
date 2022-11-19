@@ -30,9 +30,27 @@ const registrationScheme = {
     }
 }
 
+interface AuthenticationDto {
+    login: string,
+    password: string,
+}
+
+const authenticationScheme = {
+    body: {
+        type: 'object',
+        required: ['login', 'password'],
+        properties: {
+            login: {type: 'string'},
+            password: {type: 'string'},
+        }
+    }
+}
+
 export {
     RegistrationTypeDto,
     type RegistrationDto,
-
     registrationScheme,
+
+    type AuthenticationDto,
+    authenticationScheme,
 }
