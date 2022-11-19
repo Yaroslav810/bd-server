@@ -1,7 +1,18 @@
-import {User} from '@prisma/client'
+enum UserType {
+    user = 'user',
+    company = 'company'
+}
 
-type UserType = User
+interface User {
+    login: string
+    first_name: string
+    last_name: string | null
+    birth_date: Date | null
+    password: string
+    type: UserType
+}
 
 export {
-    type UserType
+    type User,
+    UserType,
 }

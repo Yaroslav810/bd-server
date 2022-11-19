@@ -1,12 +1,15 @@
 import Fastify from 'fastify'
-import {DbProvider} from './src/infrastructure/provider'
-import {UserType} from './src/model/user'
+import Bcrypt from 'fastify-bcrypt'
+import {user} from "./src/routes/user/routes"
 
 function application() {
     const fastify = Fastify({
         logger: true
     })
-    const provider = new DbProvider()
+
+    fastify.register(Bcrypt, {
+        saltWorkFactor: 12
+    })
 
     fastify.get('/', async () => {
         return {
@@ -14,21 +17,9 @@ function application() {
         }
     })
 
-    fastify.post('/create_user', {
-        schema: {
-            body: {
-                type: 'object',
-                required: ['login', 'first_name'],
-                properties: {
-                    login: {type: 'string'},
-                    first_name: {type: 'string'}
-                }
-            }
-        }
-    }, async (request) => {
-        await provider.user.createUser(request.body as UserType)
-        return null
-    })
+    fastify.register(user, {
+        prefix: "/user",
+    } as RegistrationOptions);
 
     return fastify
 }
