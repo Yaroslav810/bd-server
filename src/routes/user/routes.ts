@@ -1,6 +1,6 @@
 import {FastifyInstance} from "fastify/types/instance";
 import {registrationScheme, RegistrationDto, authenticationScheme, AuthenticationDto} from "./schemes";
-import {checkUser, createUser} from "../../modules/user/createUser";
+import {checkUser, createUser} from "../../modules/user/actions";
 import {mapAuthenticationDtoToUser, mapRegistrationDtoToUser} from "./mappers";
 
 function user(fastify: FastifyInstance, _: RegistrationOptions, done: Function) {
