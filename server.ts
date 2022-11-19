@@ -1,11 +1,13 @@
 import Fastify from 'fastify'
 import {settings} from "./core/Settings"
-import { PrismaClient } from '@prisma/client'
+import {DbProvider} from "./src/infrastructure/provider";
+import {UserType} from "./src/model/user";
 
 const fastify = Fastify({
     logger: true
 })
-const prisma = new PrismaClient()
+
+const provider = new DbProvider()
 
 fastify.get('/', async () => {
     return {
@@ -13,15 +15,19 @@ fastify.get('/', async () => {
     }
 })
 
-fastify.post('/create_user', async () => {
-    await prisma.user.create({
-        data: {
-            login: 'Yaroslav',
-            first_name: 'Yaroslav',
-            password: 'New password',
-            type: "user",
-        },
-    })
+fastify.post('/create_user', {
+    schema: {
+        body: {
+            type: 'object',
+            required: ['login', 'first_name'],
+            properties: {
+                login: {type: 'string'},
+                first_name: {type: 'string'},
+            }
+        }
+    }
+}, async (request) => {
+    await provider.user.createUser(request.body as UserType)
     return null
 })
 
