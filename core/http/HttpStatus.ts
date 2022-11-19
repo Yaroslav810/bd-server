@@ -9,5 +9,5 @@ enum HttpStatus {
 }
 
 export {
-    HttpStatus,
+    HttpStatus
 }

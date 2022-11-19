@@ -1,7 +1,7 @@
-import {User} from "@prisma/client";
-import {PrismaContextType} from "../context";
-import {BaseRepository} from "./base";
-import {UserType} from "../../model/user";
+import {User} from '@prisma/client'
+import {PrismaContextType} from '../context'
+import {BaseRepository} from './base'
+import {UserType} from '../../model/user'
 
 class UserRepository extends BaseRepository {
     constructor(dbContext: PrismaContextType) {
@@ -14,8 +14,8 @@ class UserRepository extends BaseRepository {
                 login: user.login,
                 first_name: user.first_name,
                 password: user.password,
-                type: user.type,
-            },
+                type: user.type
+            }
         })
     }
 }
@@ -25,5 +25,5 @@ function initUserRepository(dbContext: PrismaContextType) {
 }
 
 export {
-    initUserRepository,
+    initUserRepository
 }

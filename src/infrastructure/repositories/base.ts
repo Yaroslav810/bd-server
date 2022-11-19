@@ -1,4 +1,4 @@
-import {PrismaContextType} from "../context";
+import {PrismaContextType} from '../context'
 
 abstract class BaseRepository {
     protected constructor(dbContext: PrismaContextType) {

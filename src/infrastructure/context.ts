@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client"
+import {PrismaClient} from '@prisma/client'
 
 const context = new PrismaClient()
 
@@ -10,5 +10,5 @@ type PrismaContextType = typeof context
 
 export {
     type PrismaContextType,
-    getPrismaContext,
+    getPrismaContext
 }

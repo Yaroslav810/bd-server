@@ -1,7 +1,7 @@
-import {User} from "@prisma/client";
+import {User} from '@prisma/client'
 
 type UserType = User
 
 export {
-    type UserType,
+    type UserType
 }

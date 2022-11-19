@@ -1,8 +1,8 @@
 enum HttpMethod {
-    POST = "post",
-    GET = "get",
+    POST = 'post',
+    GET = 'get',
 }
 
 export {
-    HttpMethod,
+    HttpMethod
 }

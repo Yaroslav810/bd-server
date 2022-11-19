@@ -1,5 +1,5 @@
-import {getPrismaContext} from "./context";
-import {initUserRepository} from "./repositories/user";
+import {getPrismaContext} from './context'
+import {initUserRepository} from './repositories/user'
 
 class DbProvider {
     private _dbContext = getPrismaContext()
@@ -9,5 +9,5 @@ class DbProvider {
 }
 
 export {
-    DbProvider,
+    DbProvider
 }
