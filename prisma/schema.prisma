@@ -23,6 +23,7 @@ model User {
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
   Like          Like[]
+  Event         Event[]
 
   @@map("user")
 }
@@ -45,6 +46,8 @@ model Event {
   description        String?
   start              DateTime
   duration           Int
+  user_id            String
+  user               User            @relation(fields: [user_id], references: [user_id])
   participants_count Int
   price              Int?
   user_on_event      UserOnEvent[]

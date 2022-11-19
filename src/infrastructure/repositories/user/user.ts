@@ -19,6 +19,14 @@ class UserRepository extends BaseRepository {
         })
     }
 
+    async getUserById(user_id: string): Promise<UserEntity | null> {
+        return await this.dbContext.user.findUnique({
+            where: {
+                user_id,
+            }
+        })
+    }
+
     async getUserByLogin(login: string): Promise<UserEntity | null> {
         return await this.dbContext.user.findUnique({
             where: {
