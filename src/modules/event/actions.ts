@@ -4,6 +4,11 @@ import {mapEventEntityToEventDto} from "../../routes/event/mappers";
 
 const provider = getDbProvider();
 
+async function createEvent(): Promise<boolean> {
+    await provider.event.create()
+    return true
+}
+
 async function getEvents(): Promise<Array<GetEventDto>> {
     const events = await provider.event.getEvents()
 
@@ -23,5 +28,6 @@ async function getEvents(): Promise<Array<GetEventDto>> {
 }
 
 export {
+    createEvent,
     getEvents,
 }
