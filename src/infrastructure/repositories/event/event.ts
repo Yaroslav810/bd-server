@@ -24,6 +24,14 @@ class EventRepository extends BaseRepository {
     async getEvents(): Promise<Array<EventEntity>> {
         return await this.dbContext.event.findMany()
     }
+
+    async getEvent(event_id: string): Promise<EventEntity | null> {
+        return await this.dbContext.event.findUnique({
+            where: {
+                event_id,
+            }
+        })
+    }
 }
 
 function initEventRepository(dbContext: PrismaContextType) {
