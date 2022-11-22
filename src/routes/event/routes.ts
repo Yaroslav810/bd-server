@@ -1,17 +1,17 @@
 import {FastifyInstance} from 'fastify/types/instance'
-import {getScheme} from './schemes'
+import {getEventsScheme} from './schemes'
 import {createEvent, getEvents} from '../../modules/event/actions'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
     fastify.post('/create', {
-        schema: getScheme
+        schema: getEventsScheme
     }, async () => {
         return await createEvent()
     })
 
     fastify.get('/get', {
-        schema: getScheme
+        schema: getEventsScheme
     }, async () => {
         return await getEvents()
     })

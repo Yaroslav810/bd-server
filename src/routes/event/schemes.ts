@@ -1,4 +1,4 @@
-interface GetEventDto {
+interface GetEventsEventDto {
     id: string,
     title: string,
     description?: string,
@@ -10,9 +10,9 @@ interface GetEventDto {
     is_like_set: boolean,
 }
 
-const getScheme = {}
+const getEventsScheme = {}
 
 export {
-    type GetEventDto,
-    getScheme
+    type GetEventsEventDto,
+    getEventsScheme
 }

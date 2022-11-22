@@ -1,12 +1,12 @@
 import {EventEntity} from '../../infrastructure/repositories/event/types'
-import {GetEventDto} from './schemes'
+import {GetEventsEventDto} from './schemes'
 
 function mapEventEntityToEventDto(
     event: EventEntity,
     userName: string,
     participantsCount: number,
     isLikeSet: boolean
-): GetEventDto {
+): GetEventsEventDto {
     return {
         id: event.event_id,
         title: event.title,
