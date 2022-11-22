@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
 import Bcrypt from 'fastify-bcrypt'
+import cors from '@fastify/cors'
 import {user} from './src/routes/user/routes'
 import {event} from './src/routes/event/routes'
 
@@ -7,6 +8,8 @@ function application() {
     const fastify = Fastify({
         logger: true
     })
+
+    fastify.register(cors, {})
 
     fastify.register(Bcrypt, {
         saltWorkFactor: 12
