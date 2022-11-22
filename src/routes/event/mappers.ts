@@ -1,7 +1,7 @@
 import {EventEntity} from '../../infrastructure/repositories/event/types'
 import {GetEventDto, GetEventsEventDto} from './schemes'
 
-function mapEventEntityToEventDto(
+function mapEventEntityToGetEventsEventDto(
     event: EventEntity,
     userName: string,
     participantsCount: number,
@@ -39,6 +39,6 @@ function mapEventEntityToGetEventDto(
 }
 
 export {
-    mapEventEntityToEventDto,
+    mapEventEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto
 }
