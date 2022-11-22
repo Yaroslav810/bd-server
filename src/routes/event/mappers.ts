@@ -23,7 +23,7 @@ function mapEventEntityToEventDto(
 function mapEventEntityToGetEventDto(
     event: EventEntity,
     userName: string,
-    is_like_set: boolean,
+    is_like_set: boolean
 ): GetEventDto {
     return {
         id: event.event_id,
@@ -34,7 +34,7 @@ function mapEventEntityToGetEventDto(
         duration: event.duration,
         price: event.price || undefined,
         participants_count: event.participants_count,
-        is_like_set,
+        is_like_set
     }
 }
 

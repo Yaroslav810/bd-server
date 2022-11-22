@@ -31,5 +31,5 @@ export {
     getEventsScheme,
 
     type GetEventDto,
-    getEventScheme,
+    getEventScheme
 }

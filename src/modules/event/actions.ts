@@ -1,7 +1,7 @@
 import {getDbProvider} from '../../infrastructure/provider'
 import {GetEventDto, GetEventsEventDto} from '../../routes/event/schemes'
 import {mapEventEntityToEventDto, mapEventEntityToGetEventDto} from '../../routes/event/mappers'
-import {verifyExisting} from "../../../core/http/httpUtils";
+import {verifyExisting} from '../../../core/http/httpUtils'
 
 const provider = getDbProvider()
 
@@ -31,7 +31,7 @@ async function getEvents(): Promise<Array<GetEventsEventDto>> {
 async function getEvent(id: string): Promise<GetEventDto> {
     const event = verifyExisting(await provider.event.getEvent(id))
     const user = verifyExisting(await provider.user.getUserById(event.user_id))
-    return mapEventEntityToGetEventDto(event, user.login, false);
+    return mapEventEntityToGetEventDto(event, user.login, false)
 }
 
 export {

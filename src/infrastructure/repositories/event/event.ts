@@ -28,7 +28,7 @@ class EventRepository extends BaseRepository {
     async getEvent(event_id: string): Promise<EventEntity | null> {
         return await this.dbContext.event.findUnique({
             where: {
-                event_id,
+                event_id
             }
         })
     }
