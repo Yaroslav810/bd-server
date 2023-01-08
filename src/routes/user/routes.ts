@@ -24,10 +24,12 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
         const user = mapAuthenticationDtoToUser(request.body as AuthenticationDto)
         const result = await checkUser(user)
         if (result) {
+            const currentUser = await getUserByLogin(user.login)
             // @ts-ignore
-            request.session.userId = (await getUserByLogin(user.login)).user_id
+            request.session.userId = currentUser.user_id
+            return currentUser ? mapUserEntityToCurrentUserDto(currentUser) : null
         }
-        return result
+        return null
     })
 
     fastify.post('/current-user', {
