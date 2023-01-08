@@ -1,4 +1,4 @@
-enum RegistrationTypeDto {
+enum UserTypeDto {
     'user' = 'user',
     'company' = 'company'
 }
@@ -9,7 +9,7 @@ interface RegistrationDto {
     last_name?: string,
     birth_date?: Date,
     password: string,
-    type: RegistrationTypeDto,
+    type: UserTypeDto,
 }
 
 const registrationScheme = {
@@ -46,11 +46,28 @@ const authenticationScheme = {
     }
 }
 
+interface CurrentUserDto {
+    id: string,
+    login: string,
+    firstName: string,
+    lastName: string | null,
+    type: UserTypeDto
+}
+
+const currentUserScheme = {}
+
+const logoutScheme = {}
+
 export {
-    RegistrationTypeDto,
+    UserTypeDto,
     type RegistrationDto,
     registrationScheme,
 
     type AuthenticationDto,
-    authenticationScheme
+    authenticationScheme,
+
+    type CurrentUserDto,
+    currentUserScheme,
+
+    logoutScheme
 }

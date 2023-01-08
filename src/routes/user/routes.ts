@@ -1,7 +1,13 @@
 import {FastifyInstance} from 'fastify/types/instance'
-import {registrationScheme, RegistrationDto, authenticationScheme, AuthenticationDto} from './schemes'
-import {checkUser, createUser} from '../../modules/user/actions'
-import {mapAuthenticationDtoToUser, mapRegistrationDtoToUser} from './mappers'
+import {
+    registrationScheme,
+    RegistrationDto,
+    authenticationScheme,
+    AuthenticationDto,
+    currentUserScheme, logoutScheme
+} from './schemes'
+import {checkUser, createUser, getUserById, getUserByLogin} from '../../modules/user/actions'
+import {mapAuthenticationDtoToUser, mapRegistrationDtoToUser, mapUserEntityToCurrentUserDto} from './mappers'
 
 function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
@@ -16,7 +22,37 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
         schema: authenticationScheme
     }, async (request) => {
         const user = mapAuthenticationDtoToUser(request.body as AuthenticationDto)
-        return await checkUser(user)
+        const result = await checkUser(user)
+        if (result) {
+            // @ts-ignore
+            request.session.userId = (await getUserByLogin(user.login)).user_id
+        }
+        return result
+    })
+
+    fastify.post('/current-user', {
+        schema: currentUserScheme
+    }, async (request) => {
+        // @ts-ignore
+        const userId = request.session.userId
+        if (userId) {
+            const user = await getUserById(userId)
+            return user ? mapUserEntityToCurrentUserDto(user) : null
+        }
+        return null
+    })
+
+    fastify.post('/logout', {
+        schema: logoutScheme
+    }, async (request) => {
+        // @ts-ignore
+        let data = request.session.userId
+        if (!data) {
+            return false
+        }
+        // @ts-ignore
+        request.session.userId = null
+        return true
     })
 
     done()

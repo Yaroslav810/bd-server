@@ -1,11 +1,12 @@
 import {User, UserType} from '../../model/user'
-import {AuthenticationDto, RegistrationDto, RegistrationTypeDto} from './schemes'
+import {AuthenticationDto, CurrentUserDto, RegistrationDto, UserTypeDto} from './schemes'
+import {UserEntity, UserTypeEntity} from "../../infrastructure/repositories/user/types"
 
-function mapRegistrationTypeDtoToUserType(registrationType: RegistrationTypeDto): UserType {
+function mapRegistrationTypeDtoToUserType(registrationType: UserTypeDto): UserType {
     switch (registrationType) {
-        case RegistrationTypeDto.company:
+        case UserTypeDto.company:
             return UserType.company
-        case RegistrationTypeDto.user:
+        case UserTypeDto.user:
             return UserType.user
     }
 }
@@ -32,7 +33,27 @@ function mapAuthenticationDtoToUser(authenticationDto: AuthenticationDto): User 
     }
 }
 
+function mapUserTypeDtoToUserType(userTypeEntity: UserTypeEntity): UserTypeDto {
+    switch (userTypeEntity) {
+        case 'company':
+            return UserTypeDto.company
+        case 'user':
+            return UserTypeDto.user
+    }
+}
+
+function mapUserEntityToCurrentUserDto(userEntity: UserEntity): CurrentUserDto {
+    return {
+        id: userEntity.user_id,
+        login: userEntity.login,
+        firstName: userEntity.first_name,
+        lastName: userEntity.last_name,
+        type: mapUserTypeDtoToUserType(userEntity.type)
+    }
+}
+
 export {
     mapRegistrationDtoToUser,
-    mapAuthenticationDtoToUser
+    mapAuthenticationDtoToUser,
+    mapUserEntityToCurrentUserDto
 }

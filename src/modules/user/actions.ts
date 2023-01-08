@@ -1,6 +1,7 @@
 import {getDbProvider} from '../../infrastructure/provider'
 import {User} from '../../model/user'
 import {getBcryptPassword} from '../../../core/application/BcryptPassword'
+import {UserEntity} from "../../infrastructure/repositories/user/types";
 
 const provider = getDbProvider()
 
@@ -25,7 +26,17 @@ async function checkUser(user: User): Promise<boolean> {
     return await getBcryptPassword().compare(user.password, currentUser.password)
 }
 
+async function getUserById(userId: string): Promise<UserEntity | null> {
+    return await provider.user.getUserById(userId)
+}
+
+async function getUserByLogin(login: string): Promise<UserEntity | null> {
+    return await provider.user.getUserByLogin(login)
+}
+
 export {
     createUser,
-    checkUser
+    checkUser,
+    getUserById,
+    getUserByLogin
 }
