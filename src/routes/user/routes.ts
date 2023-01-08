@@ -46,8 +46,7 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
         schema: logoutScheme
     }, async (request) => {
         // @ts-ignore
-        let data = request.session.userId
-        if (!data) {
+        if (!request.session.userId) {
             return false
         }
         // @ts-ignore

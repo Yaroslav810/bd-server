@@ -1,6 +1,6 @@
 import {User, UserType} from '../../model/user'
 import {AuthenticationDto, CurrentUserDto, RegistrationDto, UserTypeDto} from './schemes'
-import {UserEntity, UserTypeEntity} from "../../infrastructure/repositories/user/types"
+import {UserEntity, UserTypeEntity} from '../../infrastructure/repositories/user/types'
 
 function mapRegistrationTypeDtoToUserType(registrationType: UserTypeDto): UserType {
     switch (registrationType) {

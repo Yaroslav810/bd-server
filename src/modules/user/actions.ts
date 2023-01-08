@@ -1,7 +1,7 @@
 import {getDbProvider} from '../../infrastructure/provider'
 import {User} from '../../model/user'
 import {getBcryptPassword} from '../../../core/application/BcryptPassword'
-import {UserEntity} from "../../infrastructure/repositories/user/types";
+import {UserEntity} from '../../infrastructure/repositories/user/types'
 
 const provider = getDbProvider()
 
