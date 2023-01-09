@@ -56,8 +56,6 @@ interface CurrentUserDto {
 
 const currentUserScheme = {}
 
-const logoutScheme = {}
-
 export {
     UserTypeDto,
     type RegistrationDto,
@@ -67,7 +65,5 @@ export {
     authenticationScheme,
 
     type CurrentUserDto,
-    currentUserScheme,
-
-    logoutScheme
+    currentUserScheme
 }

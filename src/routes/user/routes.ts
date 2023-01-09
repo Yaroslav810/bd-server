@@ -4,7 +4,7 @@ import {
     RegistrationDto,
     authenticationScheme,
     AuthenticationDto,
-    currentUserScheme, logoutScheme
+    currentUserScheme
 } from './schemes'
 import {checkUser, createUser, getUserById, getUserByLogin} from '../../modules/user/actions'
 import {mapAuthenticationDtoToUser, mapRegistrationDtoToUser, mapUserEntityToCurrentUserDto} from './mappers'
@@ -28,7 +28,7 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
         const result = await checkUser(user)
         if (result) {
             const currentUser = await getUserByLogin(user.login)
-            return currentUser ? fastify.jwt.sign({ user: currentUser.user_id }) : null
+            return currentUser ? fastify.jwt.sign({user: currentUser.user_id}) : null
         }
         return null
     })
@@ -44,18 +44,6 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
             }
         }
         return null
-    })
-
-    fastify.post('/logout', {
-        schema: logoutScheme
-    }, async (request) => {
-        // @ts-ignore
-        if (!request.session.userId) {
-            return false
-        }
-        // @ts-ignore
-        request.session.userId = null
-        return true
     })
 
     done()
