@@ -21,13 +21,14 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
     fastify.post('/authentication', {
         schema: authenticationScheme
     }, async (request) => {
+        if (request.user) {
+            return null
+        }
         const user = mapAuthenticationDtoToUser(request.body as AuthenticationDto)
         const result = await checkUser(user)
         if (result) {
             const currentUser = await getUserByLogin(user.login)
-            // @ts-ignore
-            request.session.userId = currentUser.user_id
-            return currentUser ? mapUserEntityToCurrentUserDto(currentUser) : null
+            return currentUser ? fastify.jwt.sign({ user: currentUser.user_id }) : null
         }
         return null
     })
@@ -35,11 +36,12 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
     fastify.post('/current-user', {
         schema: currentUserScheme
     }, async (request) => {
-        // @ts-ignore
-        const userId = request.session.userId
-        if (userId) {
-            const user = await getUserById(userId)
-            return user ? mapUserEntityToCurrentUserDto(user) : null
+        if (request.headers['x-access-token']) {
+            const token: {user: string} | null = fastify.jwt.decode(request.headers['x-access-token'] as string)
+            if (token) {
+                const user = await getUserById(token.user)
+                return user ? mapUserEntityToCurrentUserDto(user) : null
+            }
         }
         return null
     })
