@@ -147,7 +147,7 @@ model EventDetailedStatic {
 model Item {
   item_id      String         @id @default(uuid())
   title        String
-  description  String
+  description  String?
   created_at   DateTime       @default(now())
   updated_at   DateTime       @updatedAt
   ItemForEvent ItemForEvent[]

@@ -1,5 +1,6 @@
 import {EventEntity} from '../../infrastructure/repositories/event/types'
-import {GetEventDto, GetEventsEventDto} from './schemes'
+import {CreateEventDto, GetEventDto, GetEventsEventDto} from './schemes'
+import {Event} from "../../model/event";
 
 function mapEventEntityToGetEventsEventDto(
     event: EventEntity,
@@ -38,7 +39,22 @@ function mapEventEntityToGetEventDto(
     }
 }
 
+function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
+    return {
+        title: createEventDto.title,
+        description: createEventDto.description || null,
+        start: createEventDto.start,
+        duration: createEventDto.duration,
+        price: createEventDto.price,
+        links: createEventDto.links || null,
+        tags: createEventDto.tags || null,
+        detailed: createEventDto.detailed || null,
+        items: createEventDto.items || null,
+    }
+}
+
 export {
     mapEventEntityToGetEventsEventDto,
-    mapEventEntityToGetEventDto
+    mapEventEntityToGetEventDto,
+    mapCreateEventDtoToEvent,
 }

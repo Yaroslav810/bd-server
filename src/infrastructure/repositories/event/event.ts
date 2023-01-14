@@ -1,22 +1,54 @@
 import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
 import {EventEntity} from './types'
+import {Event} from "../../../model/event";
 
 class EventRepository extends BaseRepository {
     constructor(dbContext: PrismaContextType) {
         super(dbContext)
     }
 
-    async create(): Promise<EventEntity> {
+    async create(event: Event, userId: string): Promise<EventEntity> {
         return await this.dbContext.event.create({
             data: {
-                title: '',
-                description: '',
-                start: new Date(),
-                duration: 0,
-                user_id: 'd8beac63-9c83-4e3c-9485-7069988b9f4c',
+                title: event.title,
+                description: event.description,
+                start: event.start,
+                duration: event.duration,
+                user_id: userId,
+                price: event.price,
                 participants_count: 0,
-                price: undefined
+                EventTag: {
+                    create: event.tags?.map(tag => ({
+                        tag: {
+                            create: {
+                                tag,
+                            },
+                        },
+                    }))
+                },
+                EventLink: {
+                    create: event.links?.map(link => ({
+                        link,
+                    }))
+                },
+                EventDetailed: {
+                    create: event.detailed?.map((detailed, index) => ({
+                        title: detailed.title,
+                        description: detailed.description,
+                        order: index,
+                    }))
+                },
+                ItemForEvent: {
+                    create: event.items?.map(item => ({
+                        item: {
+                            create: {
+                                title: item.title,
+                                description: item.description,
+                            }
+                        }
+                    }))
+                }
             }
         })
     }

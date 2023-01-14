@@ -1,14 +1,18 @@
 import {FastifyInstance} from 'fastify/types/instance'
-import {getEventScheme, getEventsScheme} from './schemes'
+import {CreateEventDto, createEventsScheme, getEventScheme, getEventsScheme} from './schemes'
 import {createEvent, getEvent, getEvents} from '../../modules/event/actions'
 import {FastifyRequest} from 'fastify/types/request'
+import {mapCreateEventDtoToEvent} from "./mappers";
+import {verifyUser} from "../common/utils";
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
     fastify.post('/create', {
-        schema: getEventsScheme
-    }, async () => {
-        return await createEvent()
+        schema: createEventsScheme
+    }, async (request: FastifyRequest) => {
+        const userId = verifyUser(request, fastify)
+        const event = mapCreateEventDtoToEvent(request.body as CreateEventDto)
+        return await createEvent(event, userId)
     })
 
     fastify.get('/get', {

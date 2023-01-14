@@ -2,11 +2,12 @@ import {getDbProvider} from '../../infrastructure/provider'
 import {GetEventDto, GetEventsEventDto} from '../../routes/event/schemes'
 import {mapEventEntityToGetEventsEventDto, mapEventEntityToGetEventDto} from '../../routes/event/mappers'
 import {verifyExisting} from '../../../core/http/httpUtils'
+import {Event} from "../../model/event";
 
 const provider = getDbProvider()
 
-async function createEvent(): Promise<boolean> {
-    await provider.event.create()
+async function createEvent(event: Event, userId: string): Promise<boolean> {
+    await provider.event.create(event, userId)
     return true
 }
 

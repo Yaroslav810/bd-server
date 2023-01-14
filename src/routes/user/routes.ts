@@ -21,9 +21,6 @@ function user(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Err
     fastify.post('/authentication', {
         schema: authenticationScheme
     }, async (request) => {
-        if (request.user) {
-            return null
-        }
         const user = mapAuthenticationDtoToUser(request.body as AuthenticationDto)
         const result = await checkUser(user)
         if (result) {
