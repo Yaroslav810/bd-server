@@ -1,7 +1,7 @@
 import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
 import {EventEntity} from './types'
-import {Event} from "../../../model/event";
+import {Event} from '../../../model/event'
 
 class EventRepository extends BaseRepository {
     constructor(dbContext: PrismaContextType) {
@@ -22,21 +22,21 @@ class EventRepository extends BaseRepository {
                     create: event.tags?.map(tag => ({
                         tag: {
                             create: {
-                                tag,
-                            },
-                        },
+                                tag
+                            }
+                        }
                     }))
                 },
                 EventLink: {
                     create: event.links?.map(link => ({
-                        link,
+                        link
                     }))
                 },
                 EventDetailed: {
                     create: event.detailed?.map((detailed, index) => ({
                         title: detailed.title,
                         description: detailed.description,
-                        order: index,
+                        order: index
                     }))
                 },
                 ItemForEvent: {
@@ -44,7 +44,7 @@ class EventRepository extends BaseRepository {
                         item: {
                             create: {
                                 title: item.title,
-                                description: item.description,
+                                description: item.description
                             }
                         }
                     }))

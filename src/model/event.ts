@@ -23,5 +23,5 @@ interface Event {
 export {
     type EventDetailed,
     type EventItem,
-    type Event,
+    type Event
 }

@@ -39,8 +39,8 @@ const createEventsScheme = {
                     required: ['title'],
                     properties: {
                         title: {type: 'string'},
-                        description: {type: 'string'},
-                    },
+                        description: {type: 'string'}
+                    }
                 }},
             items: {
                 type: 'array',
@@ -49,9 +49,9 @@ const createEventsScheme = {
                     required: ['title'],
                     properties: {
                         title: {type: 'string'},
-                        description: {type: 'string'},
-                    },
-                }},
+                        description: {type: 'string'}
+                    }
+                }}
         }
     }
 }

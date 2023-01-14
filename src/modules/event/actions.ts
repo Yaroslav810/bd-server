@@ -2,7 +2,7 @@ import {getDbProvider} from '../../infrastructure/provider'
 import {GetEventDto, GetEventsEventDto} from '../../routes/event/schemes'
 import {mapEventEntityToGetEventsEventDto, mapEventEntityToGetEventDto} from '../../routes/event/mappers'
 import {verifyExisting} from '../../../core/http/httpUtils'
-import {Event} from "../../model/event";
+import {Event} from '../../model/event'
 
 const provider = getDbProvider()
 

@@ -1,6 +1,6 @@
 import {EventEntity} from '../../infrastructure/repositories/event/types'
 import {CreateEventDto, GetEventDto, GetEventsEventDto} from './schemes'
-import {Event} from "../../model/event";
+import {Event} from '../../model/event'
 
 function mapEventEntityToGetEventsEventDto(
     event: EventEntity,
@@ -49,12 +49,12 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
         links: createEventDto.links || null,
         tags: createEventDto.tags || null,
         detailed: createEventDto.detailed || null,
-        items: createEventDto.items || null,
+        items: createEventDto.items || null
     }
 }
 
 export {
     mapEventEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto,
-    mapCreateEventDtoToEvent,
+    mapCreateEventDtoToEvent
 }
