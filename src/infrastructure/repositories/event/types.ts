@@ -1,5 +1,6 @@
-import {Event as EventEntity} from '@prisma/client'
+import {Event as EventEntity, Like as LikeEntity} from '@prisma/client'
 
 export {
-    type EventEntity
+    type EventEntity,
+    type LikeEntity
 }

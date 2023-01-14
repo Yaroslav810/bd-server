@@ -19,6 +19,6 @@ export function sendUnauthorized(message = 'Unauthorized'): never {
     throw new HttpError(HttpStatus.UNAUTHORIZED, message)
 }
 
-export function sendForbidden(message: string): never {
+export function sendForbidden(message = 'Forbidden'): never {
     throw new HttpError(HttpStatus.FORBIDDEN, message)
 }

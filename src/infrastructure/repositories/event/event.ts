@@ -1,6 +1,6 @@
 import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
-import {EventEntity} from './types'
+import {EventEntity, LikeEntity} from './types'
 import {Event} from '../../../model/event'
 
 class EventRepository extends BaseRepository {
@@ -57,10 +57,36 @@ class EventRepository extends BaseRepository {
         return await this.dbContext.event.findMany()
     }
 
-    async getEvent(event_id: string): Promise<EventEntity | null> {
+    async getEvent(eventId: string): Promise<EventEntity | null> {
         return await this.dbContext.event.findUnique({
             where: {
-                event_id
+                event_id: eventId
+            }
+        })
+    }
+
+    async getLike(eventId: string, userId: string): Promise<LikeEntity | null> {
+        return await this.dbContext.like.findFirst({
+            where: {
+                event_id: eventId,
+                user_id: userId
+            }
+        })
+    }
+
+    async addLike(eventId: string, userId: string) {
+        return await this.dbContext.like.create({
+            data: {
+                event_id: eventId,
+                user_id: userId
+            }
+        })
+    }
+
+    async removeLike(likeId: string) {
+        return await this.dbContext.like.delete({
+            where: {
+                like_id: likeId
             }
         })
     }

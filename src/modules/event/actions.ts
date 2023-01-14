@@ -1,6 +1,6 @@
 import {getDbProvider} from '../../infrastructure/provider'
 import {mapEventEntityToGetEventsEventDto, mapEventEntityToGetEventDto} from '../../routes/event/mappers'
-import {verifyExisting} from '../../../core/http/httpUtils'
+import {sendForbidden, verifyExisting} from '../../../core/http/httpUtils'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from '../../routes/event/schemes/getEvents'
 import {GetEventDto} from '../../routes/event/schemes/getEvent'
@@ -36,8 +36,26 @@ async function getEvent(id: string): Promise<GetEventDto> {
     return mapEventEntityToGetEventDto(event, user.login, false)
 }
 
+async function addLike(eventId: string, userId: string): Promise<void> {
+    verifyExisting(await getEvent(eventId))
+    await provider.event.getLike(eventId, userId) && sendForbidden()
+    await provider.event.addLike(eventId, userId)
+}
+
+async function removeLike(eventId: string, userId: string): Promise<boolean> {
+    verifyExisting(await getEvent(eventId))
+    const like = await provider.event.getLike(eventId, userId)
+    if (!like) {
+        sendForbidden()
+    }
+    await provider.event.removeLike(like.like_id)
+    return true
+}
+
 export {
     createEvent,
     getEvents,
-    getEvent
+    getEvent,
+    addLike,
+    removeLike
 }
