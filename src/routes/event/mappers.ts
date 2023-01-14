@@ -3,7 +3,7 @@ import {Event} from '../../model/event'
 import {GetEventsEventDto} from './schemes/getEvents'
 import {GetEventDto} from './schemes/getEvent'
 import {CreateEventDto} from './schemes/createEvent'
-import {LikedEventDto} from './schemes/liked'
+import {GetLikedEventsDto} from './schemes/getLikedEvents'
 
 function mapEventWithUserAndLikeEntityToGetEventsEventDto(
     event: EventWithUserAndLikeEntity,
@@ -58,7 +58,7 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
 
 function mapEventsWithUserEntityToLikedEventDto(
     event: EventWithUserEntity
-): LikedEventDto {
+): GetLikedEventsDto {
     return {
         id: event.event_id,
         title: event.title,

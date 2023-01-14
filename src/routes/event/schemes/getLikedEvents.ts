@@ -1,4 +1,4 @@
-interface LikedEventDto {
+interface GetLikedEventsDto {
     id: string,
     title: string,
     description?: string,
@@ -10,9 +10,9 @@ interface LikedEventDto {
     is_like_set: boolean,
 }
 
-const likedScheme = {}
+const getLikedEventScheme = {}
 
 export {
-    type LikedEventDto,
-    likedScheme
+    type GetLikedEventsDto,
+    getLikedEventScheme
 }

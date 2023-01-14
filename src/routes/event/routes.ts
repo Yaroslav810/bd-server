@@ -8,7 +8,7 @@ import {getEventsScheme} from './schemes/getEvents'
 import {getEventScheme} from './schemes/getEvent'
 import {addLikeScheme} from './schemes/addLike'
 import {removeLikeScheme} from './schemes/removeLike'
-import {likedScheme} from './schemes/liked'
+import {getLikedEventScheme} from './schemes/getLikedEvents'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
@@ -51,7 +51,7 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
     })
 
     fastify.get('/liked', {
-        schema: likedScheme
+        schema: getLikedEventScheme
     }, async (request: FastifyRequest) => {
         const userId = verifyUser(request, fastify)
         return await getLikedEvents(userId)
