@@ -1,5 +1,13 @@
 import {FastifyInstance} from 'fastify/types/instance'
-import {addLike, createEvent, getEvent, getEvents, getLikedEvents, removeLike} from '../../modules/event/actions'
+import {
+    addLike,
+    createEvent,
+    getEvent,
+    getEvents,
+    getLikedEvents,
+    getUserEvents,
+    removeLike
+} from '../../modules/event/actions'
 import {FastifyRequest} from 'fastify/types/request'
 import {mapCreateEventDtoToEvent} from './mappers'
 import {getUser, verifyUser} from '../common/utils'
@@ -9,6 +17,7 @@ import {getEventScheme} from './schemes/getEvent'
 import {addLikeScheme} from './schemes/addLike'
 import {removeLikeScheme} from './schemes/removeLike'
 import {getLikedEventScheme} from './schemes/getLikedEvents'
+import {getMyEventsScheme} from './schemes/getMyEvents'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
@@ -55,6 +64,13 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
     }, async (request: FastifyRequest) => {
         const userId = verifyUser(request, fastify)
         return await getLikedEvents(userId)
+    })
+
+    fastify.get('/my', {
+        schema: getMyEventsScheme
+    }, async (request: FastifyRequest) => {
+        const userId = verifyUser(request, fastify)
+        return await getUserEvents(userId)
     })
 
     done()

@@ -116,6 +116,20 @@ class EventRepository extends BaseRepository {
             }
         })
     }
+
+    async getEventsByUserId(userId: string): Promise<Array<EventWithUserAndLikeEntity>> {
+        return await this.dbContext.event.findMany({
+            where: {
+                user: {
+                    user_id: userId
+                }
+            },
+            include: {
+                user: true,
+                Like: true
+            }
+        })
+    }
 }
 
 function initEventRepository(dbContext: PrismaContextType) {

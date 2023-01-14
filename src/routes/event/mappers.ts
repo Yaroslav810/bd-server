@@ -56,7 +56,7 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
     }
 }
 
-function mapEventsWithUserEntityToLikedEventDto(
+function mapEventsWithUserEntityToGetLikedEventsDto(
     event: EventWithUserEntity
 ): GetLikedEventsDto {
     return {
@@ -72,9 +72,28 @@ function mapEventsWithUserEntityToLikedEventDto(
     }
 }
 
+function mapEventWithUserAndLikeEntityToGetMyEventsDto(
+    event: EventWithUserAndLikeEntity,
+    userId: string
+): GetLikedEventsDto {
+    const likedUserIds = event.Like.map(like => like.user_id)
+    return {
+        id: event.event_id,
+        title: event.title,
+        description: event.description || undefined,
+        user_name: event.user.login,
+        start: event.start,
+        duration: event.duration,
+        price: event.price || undefined,
+        participants_count: event.participants_count,
+        is_like_set: likedUserIds.includes(userId)
+    }
+}
+
 export {
     mapEventWithUserAndLikeEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto,
     mapCreateEventDtoToEvent,
-    mapEventsWithUserEntityToLikedEventDto
+    mapEventsWithUserEntityToGetLikedEventsDto,
+    mapEventWithUserAndLikeEntityToGetMyEventsDto
 }

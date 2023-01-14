@@ -2,12 +2,14 @@ import {getDbProvider} from '../../infrastructure/provider'
 import {
     mapEventWithUserAndLikeEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto,
-    mapEventsWithUserEntityToLikedEventDto
+    mapEventsWithUserEntityToGetLikedEventsDto, mapEventWithUserAndLikeEntityToGetMyEventsDto
 } from '../../routes/event/mappers'
 import {sendForbidden, verifyExisting} from '../../../core/http/httpUtils'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from '../../routes/event/schemes/getEvents'
 import {GetEventDto} from '../../routes/event/schemes/getEvent'
+import {GetLikedEventsDto} from '../../routes/event/schemes/getLikedEvents'
+import {GetMyEventsDto} from '../../routes/event/schemes/getMyEvents'
 
 const provider = getDbProvider()
 
@@ -50,7 +52,7 @@ async function removeLike(eventId: string, userId: string): Promise<boolean> {
     return true
 }
 
-async function getLikedEvents(userId: string): Promise<Array<GetEventsEventDto>> {
+async function getLikedEvents(userId: string): Promise<Array<GetLikedEventsDto>> {
     const likes = await provider.event.getLikesByUserId(userId)
     if (likes.length === 0) {
         return []
@@ -58,7 +60,12 @@ async function getLikedEvents(userId: string): Promise<Array<GetEventsEventDto>>
 
     const eventIds = likes.map(like => like.event_id)
     const events = await provider.event.getEventsById(eventIds)
-    return events.map(mapEventsWithUserEntityToLikedEventDto)
+    return events.map(mapEventsWithUserEntityToGetLikedEventsDto)
+}
+
+async function getUserEvents(userId: string): Promise<Array<GetMyEventsDto>> {
+    const events = await provider.event.getEventsByUserId(userId)
+    return events.map(event => mapEventWithUserAndLikeEntityToGetMyEventsDto(event, userId))
 }
 
 export {
@@ -67,5 +74,6 @@ export {
     getEvent,
     addLike,
     removeLike,
-    getLikedEvents
+    getLikedEvents,
+    getUserEvents
 }
