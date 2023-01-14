@@ -12,6 +12,20 @@ import {likedScheme} from './schemes/liked'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
+    fastify.get('/get', {
+        schema: getEventsScheme
+    }, async (request: FastifyRequest) => {
+        const user = getUser(request, fastify)
+        return await getEvents(user)
+    })
+
+    fastify.get('/get/:id', {
+        schema: getEventScheme
+    }, async (request: FastifyRequest) => {
+        const {id} = request.params as { id: string }
+        return await getEvent(id)
+    })
+
     fastify.post('/create', {
         schema: createEventsScheme
     }, async (request: FastifyRequest) => {
@@ -41,20 +55,6 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
     }, async (request: FastifyRequest) => {
         const userId = verifyUser(request, fastify)
         return await getLikedEvents(userId)
-    })
-
-    fastify.get('/get', {
-        schema: getEventsScheme
-    }, async (request: FastifyRequest) => {
-        const user = getUser(request, fastify)
-        return await getEvents(user)
-    })
-
-    fastify.get('/get/:id', {
-        schema: getEventScheme
-    }, async (request: FastifyRequest) => {
-        const {id} = request.params as { id: string }
-        return await getEvent(id)
     })
 
     done()
