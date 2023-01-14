@@ -14,6 +14,15 @@ function verifyUser(request: FastifyRequest, fastify: FastifyInstance): string {
     sendUnauthorized()
 }
 
+function getUser(request: FastifyRequest, fastify: FastifyInstance): string | null {
+    if (!request.headers['x-access-token']) {
+        return null
+    }
+    const token: {user: string} | null = fastify.jwt.decode(request.headers['x-access-token'] as string)
+    return token ? token.user : null
+}
+
 export {
-    verifyUser
+    verifyUser,
+    getUser
 }

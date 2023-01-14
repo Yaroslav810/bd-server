@@ -1,5 +1,9 @@
 import {getDbProvider} from '../../infrastructure/provider'
-import {mapEventEntityToGetEventsEventDto, mapEventEntityToGetEventDto} from '../../routes/event/mappers'
+import {
+    mapEventWithUserAndLikeEntityToGetEventsEventDto,
+    mapEventEntityToGetEventDto,
+    mapEventsWithUserEntityToLikedEventDto
+} from '../../routes/event/mappers'
 import {sendForbidden, verifyExisting} from '../../../core/http/httpUtils'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from '../../routes/event/schemes/getEvents'
@@ -12,26 +16,20 @@ async function createEvent(event: Event, userId: string): Promise<boolean> {
     return true
 }
 
-async function getEvents(): Promise<Array<GetEventsEventDto>> {
-    const events = await provider.event.getEvents()
+async function getEvents(userId: string | null): Promise<Array<GetEventsEventDto>> {
+    const events = await provider.event.getEvents({
+        withUser: true,
+        withLike: true
+    })
 
-    const eventsDto: Array<GetEventsEventDto> = []
-    for (const event of events) {
-        const user = await provider.user.getUserById(event.user_id)
-        if (user) {
-            eventsDto.push(mapEventEntityToGetEventsEventDto(
-                event,
-                user.login,
-                0,
-                false
-            ))
-        }
-    }
-    return eventsDto
+    return events.map(event => mapEventWithUserAndLikeEntityToGetEventsEventDto(
+        event,
+        userId
+    ))
 }
 
-async function getEvent(id: string): Promise<GetEventDto> {
-    const event = verifyExisting(await provider.event.getEvent(id))
+async function getEvent(eventId: string): Promise<GetEventDto> {
+    const event = verifyExisting(await provider.event.getEvent(eventId))
     const user = verifyExisting(await provider.user.getUserById(event.user_id))
     return mapEventEntityToGetEventDto(event, user.login, false)
 }
@@ -52,10 +50,22 @@ async function removeLike(eventId: string, userId: string): Promise<boolean> {
     return true
 }
 
+async function getLikedEvents(userId: string): Promise<Array<GetEventsEventDto>> {
+    const likes = await provider.event.getLikesByUserId(userId)
+    if (likes.length === 0) {
+        return []
+    }
+
+    const eventIds = likes.map(like => like.event_id)
+    const events = await provider.event.getEventsById(eventIds)
+    return events.map(mapEventsWithUserEntityToLikedEventDto)
+}
+
 export {
     createEvent,
     getEvents,
     getEvent,
     addLike,
-    removeLike
+    removeLike,
+    getLikedEvents
 }

@@ -1,25 +1,26 @@
-import {EventEntity} from '../../infrastructure/repositories/event/types'
+import {EventEntity, EventWithUserAndLikeEntity, EventWithUserEntity} from '../../infrastructure/repositories/event/types'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from './schemes/getEvents'
 import {GetEventDto} from './schemes/getEvent'
 import {CreateEventDto} from './schemes/createEvent'
+import {LikedEventDto} from './schemes/liked'
 
-function mapEventEntityToGetEventsEventDto(
-    event: EventEntity,
-    userName: string,
-    participantsCount: number,
-    isLikeSet: boolean
+function mapEventWithUserAndLikeEntityToGetEventsEventDto(
+    event: EventWithUserAndLikeEntity,
+    userId: string | null
 ): GetEventsEventDto {
+    const userIdLikes = event.Like.map(like => like.user_id)
+
     return {
         id: event.event_id,
         title: event.title,
         description: event.description || undefined,
-        user_name: userName,
+        user_name: event.user.login,
         start: event.start,
         duration: event.duration,
         price: event.price || undefined,
-        participants_count: participantsCount,
-        is_like_set: isLikeSet
+        participants_count: event.participants_count,
+        is_like_set: userId ? userIdLikes.includes(userId) : false
     }
 }
 
@@ -55,8 +56,25 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
     }
 }
 
+function mapEventsWithUserEntityToLikedEventDto(
+    event: EventWithUserEntity
+): LikedEventDto {
+    return {
+        id: event.event_id,
+        title: event.title,
+        description: event.description || undefined,
+        user_name: event.user.login,
+        start: event.start,
+        duration: event.duration,
+        price: event.price || undefined,
+        participants_count: event.participants_count,
+        is_like_set: true
+    }
+}
+
 export {
-    mapEventEntityToGetEventsEventDto,
+    mapEventWithUserAndLikeEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto,
-    mapCreateEventDtoToEvent
+    mapCreateEventDtoToEvent,
+    mapEventsWithUserEntityToLikedEventDto
 }
