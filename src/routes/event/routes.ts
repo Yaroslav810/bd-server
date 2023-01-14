@@ -1,9 +1,11 @@
 import {FastifyInstance} from 'fastify/types/instance'
-import {CreateEventDto, createEventsScheme, getEventScheme, getEventsScheme} from './schemes'
 import {createEvent, getEvent, getEvents} from '../../modules/event/actions'
 import {FastifyRequest} from 'fastify/types/request'
 import {mapCreateEventDtoToEvent} from './mappers'
 import {verifyUser} from '../common/utils'
+import {CreateEventDto, createEventsScheme} from './schemes/createEvent'
+import {getEventsScheme} from './schemes/getEvents'
+import {getEventScheme} from './schemes/getEvent'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 

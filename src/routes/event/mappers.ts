@@ -1,6 +1,8 @@
 import {EventEntity} from '../../infrastructure/repositories/event/types'
-import {CreateEventDto, GetEventDto, GetEventsEventDto} from './schemes'
 import {Event} from '../../model/event'
+import {GetEventsEventDto} from './schemes/getEvents'
+import {GetEventDto} from './schemes/getEvent'
+import {CreateEventDto} from './schemes/createEvent'
 
 function mapEventEntityToGetEventsEventDto(
     event: EventEntity,
