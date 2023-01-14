@@ -53,6 +53,14 @@ class EventRepository extends BaseRepository {
         })
     }
 
+    async delete(eventId: string): Promise<EventEntity> {
+        return await this.dbContext.event.delete({
+            where: {
+                event_id: eventId
+            }
+        })
+    }
+
     async getEvents(options: GetEventsOptions): Promise<Array<EventWithUserAndLikeEntity>> {
         return await this.dbContext.event.findMany({
             include: {

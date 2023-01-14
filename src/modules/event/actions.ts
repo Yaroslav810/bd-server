@@ -18,6 +18,15 @@ async function createEvent(event: Event, userId: string): Promise<boolean> {
     return true
 }
 
+async function removeEvent(eventId: string, userId: string): Promise<boolean> {
+    const event = verifyExisting(await provider.event.getEvent(eventId))
+    if (event.user_id !== userId) {
+        sendForbidden()
+    }
+    await provider.event.delete(eventId)
+    return true
+}
+
 async function getEvents(userId: string | null): Promise<Array<GetEventsEventDto>> {
     const events = await provider.event.getEvents({
         withUser: true,
@@ -70,6 +79,7 @@ async function getUserEvents(userId: string): Promise<Array<GetMyEventsDto>> {
 
 export {
     createEvent,
+    removeEvent,
     getEvents,
     getEvent,
     addLike,

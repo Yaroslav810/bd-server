@@ -5,7 +5,7 @@ import {
     getEvent,
     getEvents,
     getLikedEvents,
-    getUserEvents,
+    getUserEvents, removeEvent,
     removeLike
 } from '../../modules/event/actions'
 import {FastifyRequest} from 'fastify/types/request'
@@ -18,6 +18,7 @@ import {addLikeScheme} from './schemes/addLike'
 import {removeLikeScheme} from './schemes/removeLike'
 import {getLikedEventScheme} from './schemes/getLikedEvents'
 import {getMyEventsScheme} from './schemes/getMyEvents'
+import {deleteEventScheme} from './schemes/deleteEvent'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
@@ -41,6 +42,14 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
         const userId = verifyUser(request, fastify)
         const event = mapCreateEventDtoToEvent(request.body as CreateEventDto)
         return await createEvent(event, userId)
+    })
+
+    fastify.post('/delete/:id', {
+        schema: deleteEventScheme
+    }, async (request: FastifyRequest) => {
+        const userId = verifyUser(request, fastify)
+        const {id: eventId} = request.params as { id: string }
+        return await removeEvent(eventId, userId)
     })
 
     fastify.post('/add-like/:id', {
