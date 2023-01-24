@@ -1,6 +1,13 @@
 import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
-import {EventEntity, EventWithUserAndLikeEntity, EventWithUserEntity, GetEventsOptions, LikeEntity} from './types'
+import {
+    EventEntity,
+    EventWithUserAndLikeAndStaticEntity,
+    EventWithUserAndLikeEntity,
+    EventWithUserEntity,
+    GetEventsOptions,
+    LikeEntity
+} from './types'
 import {Event} from '../../../model/event'
 
 class EventRepository extends BaseRepository {
@@ -68,11 +75,12 @@ class EventRepository extends BaseRepository {
         })
     }
 
-    async getEvents(options: GetEventsOptions): Promise<Array<EventWithUserAndLikeEntity>> {
+    async getEvents(options: GetEventsOptions): Promise<Array<EventWithUserAndLikeAndStaticEntity>> {
         return await this.dbContext.event.findMany({
             include: {
                 user: options.withUser,
-                Like: options.withLike
+                Like: options.withLike,
+                EventStatic: true
             }
         })
     }

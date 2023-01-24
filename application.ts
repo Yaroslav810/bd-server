@@ -2,10 +2,13 @@ import Fastify from 'fastify'
 import Bcrypt from 'fastify-bcrypt'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
+import fastifyStatic from '@fastify/static'
 import fileUpload from 'fastify-file-upload'
 import {user} from './src/routes/user/routes'
 import {event} from './src/routes/event/routes'
 import {settings} from './core/Settings'
+import {images} from './src/routes/static/routes'
+import path from 'path'
 
 function application() {
     const fastify = Fastify({
@@ -24,6 +27,10 @@ function application() {
 
     fastify.register(fileUpload)
 
+    fastify.register(fastifyStatic, {
+        root: path.join(__dirname, 'images')
+    })
+
     fastify.get('/', async () => {
         return {
             hello: 'world'
@@ -36,6 +43,10 @@ function application() {
 
     fastify.register(event, {
         prefix: '/event'
+    } as RegistrationOptions)
+
+    fastify.register(images, {
+        prefix: '/images'
     } as RegistrationOptions)
 
     return fastify

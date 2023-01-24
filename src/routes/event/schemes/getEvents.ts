@@ -7,6 +7,7 @@ interface GetEventsEventDto {
     duration: number,
     price?: number,
     participants_count: number,
+    image?: string,
     is_like_set: boolean,
 }
 
