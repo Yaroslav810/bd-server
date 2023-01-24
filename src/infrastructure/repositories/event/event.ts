@@ -8,7 +8,7 @@ class EventRepository extends BaseRepository {
         super(dbContext)
     }
 
-    async create(event: Event, userId: string): Promise<EventEntity> {
+    async create(event: Event, userId: string, title: string | null): Promise<EventEntity> {
         return await this.dbContext.event.create({
             data: {
                 title: event.title,
@@ -48,6 +48,13 @@ class EventRepository extends BaseRepository {
                             }
                         }
                     }))
+                },
+                EventStatic: {
+                    create: title
+                        ? {
+                            static_path: title
+                        }
+                        : undefined
                 }
             }
         })

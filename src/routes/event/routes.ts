@@ -40,7 +40,9 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
         schema: createEventsScheme
     }, async (request: FastifyRequest) => {
         const userId = verifyUser(request, fastify)
-        const event = mapCreateEventDtoToEvent(request.body as CreateEventDto)
+        const data = JSON.parse((request.body as {data: string}).data) as CreateEventDto
+        const image = (request.body as {image: File | null}).image
+        const event = mapCreateEventDtoToEvent(data as CreateEventDto, image)
         return await createEvent(event, userId)
     })
 

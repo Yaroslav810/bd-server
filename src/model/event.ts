@@ -18,6 +18,7 @@ interface Event {
     tags: string[] | null,
     detailed: EventDetailed[] | null,
     items: EventItem[] | null,
+    image: File | null,
 }
 
 export {

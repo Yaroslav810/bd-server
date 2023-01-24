@@ -14,8 +14,9 @@ type CreateEventDto = {
     start: Date,
     duration: number,
     price: number,
-    links?: string[],
-    tags?: string[],
+    links: string[],
+    tags: string[],
+    image?: File,
     detailed?: CreateEventDetailedDto[],
     items?: CreateEventItemsDto[],
 }
@@ -23,35 +24,9 @@ type CreateEventDto = {
 const createEventsScheme = {
     body: {
         type: 'object',
-        required: ['title', 'start', 'price'],
+        required: ['data'],
         properties: {
-            title: {type: 'string'},
-            description: {type: 'string'},
-            start: {type: 'string', format: 'date-time'},
-            duration: {type: 'number'},
-            price: {type: 'number'},
-            links: {type: 'array', items: {type: 'string'}},
-            tags: {type: 'array', items: {type: 'string'}},
-            detailed: {
-                type: 'array',
-                items: {
-                    type: 'object',
-                    required: ['title'],
-                    properties: {
-                        title: {type: 'string'},
-                        description: {type: 'string'}
-                    }
-                }},
-            items: {
-                type: 'array',
-                items: {
-                    type: 'object',
-                    required: ['title'],
-                    properties: {
-                        title: {type: 'string'},
-                        description: {type: 'string'}
-                    }
-                }}
+            data: {type: 'string'}
         }
     }
 }

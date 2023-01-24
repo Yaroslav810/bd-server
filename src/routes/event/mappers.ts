@@ -42,7 +42,7 @@ function mapEventEntityToGetEventDto(
     }
 }
 
-function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
+function mapCreateEventDtoToEvent(createEventDto: CreateEventDto, image: File | null): Event {
     return {
         title: createEventDto.title,
         description: createEventDto.description || null,
@@ -52,7 +52,8 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto): Event {
         links: createEventDto.links || null,
         tags: createEventDto.tags || null,
         detailed: createEventDto.detailed || null,
-        items: createEventDto.items || null
+        items: createEventDto.items || null,
+        image: image ?? null
     }
 }
 

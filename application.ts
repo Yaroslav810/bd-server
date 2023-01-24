@@ -2,6 +2,7 @@ import Fastify from 'fastify'
 import Bcrypt from 'fastify-bcrypt'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
+import fileUpload from 'fastify-file-upload'
 import {user} from './src/routes/user/routes'
 import {event} from './src/routes/event/routes'
 import {settings} from './core/Settings'
@@ -20,6 +21,8 @@ function application() {
     fastify.register(jwt, {
         secret: settings.SESSION_SECRET
     })
+
+    fastify.register(fileUpload)
 
     fastify.get('/', async () => {
         return {

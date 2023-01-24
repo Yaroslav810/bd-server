@@ -10,11 +10,22 @@ import {GetEventsEventDto} from '../../routes/event/schemes/getEvents'
 import {GetEventDto} from '../../routes/event/schemes/getEvent'
 import {GetLikedEventsDto} from '../../routes/event/schemes/getLikedEvents'
 import {GetMyEventsDto} from '../../routes/event/schemes/getMyEvents'
+import {createImage, isValidImage} from '../static/actions'
 
 const provider = getDbProvider()
 
 async function createEvent(event: Event, userId: string): Promise<boolean> {
-    await provider.event.create(event, userId)
+    let title = null
+    if (event.image) {
+        const isValid = isValidImage(event.image)
+        if (!isValid) {
+            sendForbidden('Невалидное изображение')
+        }
+
+        title = await createImage(event.image)
+        console.log(userId)
+    }
+    await provider.event.create(event, userId, title)
     return true
 }
 
