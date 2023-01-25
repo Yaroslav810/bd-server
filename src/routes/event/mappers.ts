@@ -1,8 +1,7 @@
 import {
     EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
-    EventWithUserAndLikeEntity,
-    EventWithUserEntity
+    EventWithUserAndLikeEntity, EventWithUserAndStaticEntity
 } from '../../infrastructure/repositories/event/types'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from './schemes/getEvents'
@@ -70,7 +69,7 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto, image: File | 
 }
 
 function mapEventsWithUserEntityToGetLikedEventsDto(
-    event: EventWithUserEntity
+    event: EventWithUserAndStaticEntity
 ): GetLikedEventsDto {
     return {
         id: event.event_id,
@@ -80,6 +79,7 @@ function mapEventsWithUserEntityToGetLikedEventsDto(
         start: event.start,
         duration: event.duration,
         price: event.price || undefined,
+        image: event.EventStatic.length && event.EventStatic[0] ? event.EventStatic[0].static_path : undefined,
         participants_count: event.participants_count,
         is_like_set: true
     }

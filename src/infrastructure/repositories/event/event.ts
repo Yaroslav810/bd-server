@@ -5,7 +5,7 @@ import {
     EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndLikeEntity,
-    EventWithUserEntity,
+    EventWithUserAndStaticEntity,
     GetEventsOptions,
     LikeEntity
 } from './types'
@@ -139,7 +139,7 @@ class EventRepository extends BaseRepository {
         })
     }
 
-    async getEventsById(eventIds: Array<string>): Promise<Array<EventWithUserEntity>> {
+    async getEventsById(eventIds: Array<string>): Promise<Array<EventWithUserAndStaticEntity>> {
         return await this.dbContext.event.findMany({
             where: {
                 event_id: {
@@ -147,7 +147,8 @@ class EventRepository extends BaseRepository {
                 }
             },
             include: {
-                user: true
+                user: true,
+                EventStatic: true
             }
         })
     }
