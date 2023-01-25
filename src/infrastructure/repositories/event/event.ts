@@ -2,7 +2,7 @@ import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
 import {
     EventEntity,
-    EventWithStaticAndTagAndLinkEntity,
+    EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndLikeEntity,
     EventWithUserEntity,
@@ -86,7 +86,7 @@ class EventRepository extends BaseRepository {
         })
     }
 
-    async getEvent(eventId: string): Promise<EventWithStaticAndTagAndLinkEntity | null> {
+    async getEvent(eventId: string): Promise<EventWithUserAndLikeAndsStaticAndTagAndLinkEntity | null> {
         return await this.dbContext.event.findUnique({
             where: {
                 event_id: eventId
@@ -98,7 +98,9 @@ class EventRepository extends BaseRepository {
                         tag: true
                     }
                 },
-                EventLink: true
+                EventLink: true,
+                Like: true,
+                user: true
             }
         })
     }

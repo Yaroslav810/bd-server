@@ -15,7 +15,12 @@ interface GetEventsOptions {
 
 type EventWithUserAndLikeAndStaticEntity = (EventEntity & {user: UserEntity, Like: LikeEntity[], EventStatic: EventStaticEntity[]})
 
-type EventWithStaticAndTagAndLinkEntity = (EventEntity & {EventStatic: EventStaticEntity[], EventTag: (EventTagEntity & {tag: TagEntity})[], EventLink: EventLinkEntity[]})
+type EventWithUserAndLikeAndsStaticAndTagAndLinkEntity = (EventEntity & {
+    user: UserEntity,
+    Like: LikeEntity[],
+    EventStatic: EventStaticEntity[],
+    EventTag: (EventTagEntity & {tag: TagEntity})[],
+    EventLink: EventLinkEntity[]})
 
 type EventWithStaticEntity = (EventEntity & {EventStatic: EventStaticEntity[]})
 
@@ -28,7 +33,7 @@ export {
     type LikeEntity,
 
     type GetEventsOptions,
-    type EventWithStaticAndTagAndLinkEntity,
+    type EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     type EventWithUserAndLikeAndStaticEntity,
     type EventWithUserAndLikeEntity,
     type EventWithStaticEntity,

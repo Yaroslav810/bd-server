@@ -50,20 +50,19 @@ async function getEvents(userId: string | null): Promise<Array<GetEventsEventDto
     ))
 }
 
-async function getEvent(eventId: string): Promise<GetEventDto> {
+async function getEvent(eventId: string, userId: string | null): Promise<GetEventDto> {
     const event = verifyExisting(await provider.event.getEvent(eventId))
-    const user = verifyExisting(await provider.user.getUserById(event.user_id))
-    return mapEventEntityToGetEventDto(event, user.login, false)
+    return mapEventEntityToGetEventDto(event, userId)
 }
 
 async function addLike(eventId: string, userId: string): Promise<void> {
-    verifyExisting(await getEvent(eventId))
+    verifyExisting(await getEvent(eventId, userId))
     await provider.event.getLike(eventId, userId) && sendForbidden()
     await provider.event.addLike(eventId, userId)
 }
 
 async function removeLike(eventId: string, userId: string): Promise<boolean> {
-    verifyExisting(await getEvent(eventId))
+    verifyExisting(await getEvent(eventId, userId))
     const like = await provider.event.getLike(eventId, userId)
     if (!like) {
         sendForbidden()

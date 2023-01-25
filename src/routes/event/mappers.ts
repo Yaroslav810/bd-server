@@ -1,5 +1,5 @@
 import {
-    EventWithStaticAndTagAndLinkEntity,
+    EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndLikeEntity,
     EventWithUserEntity
@@ -33,15 +33,16 @@ function mapEventWithUserAndLikeEntityToGetEventsEventDto(
 }
 
 function mapEventEntityToGetEventDto(
-    event: EventWithStaticAndTagAndLinkEntity,
-    userName: string,
-    is_like_set: boolean
+    event: EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
+    userId: string | null
 ): GetEventDto {
+    const userIdLikes = event.Like.map(like => like.user_id)
+
     return {
         id: event.event_id,
         title: event.title,
         description: event.description || undefined,
-        user_name: userName,
+        user_name: event.user.login,
         start: event.start,
         duration: event.duration,
         price: event.price || undefined,
@@ -49,7 +50,7 @@ function mapEventEntityToGetEventDto(
         image: event.EventStatic.length && event.EventStatic[0] ? event.EventStatic[0].static_path : undefined,
         links: event.EventLink.map(link => link.link),
         tags: event.EventTag.map(tag => tag.tag.tag),
-        is_like_set
+        is_like_set: userId ? userIdLikes.includes(userId) : false
     }
 }
 

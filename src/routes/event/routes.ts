@@ -32,8 +32,9 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
     fastify.get('/get/:id', {
         schema: getEventScheme
     }, async (request: FastifyRequest) => {
+        const user = getUser(request, fastify)
         const {id} = request.params as { id: string }
-        return await getEvent(id)
+        return await getEvent(id, user)
     })
 
     fastify.post('/create', {
