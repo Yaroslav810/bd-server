@@ -26,8 +26,6 @@ type EventWithStaticEntity = (EventEntity & {EventStatic: EventStaticEntity[]})
 
 type EventWithUserAndStaticEntity = (EventEntity & {user: UserEntity, EventStatic: EventStaticEntity[]})
 
-type EventWithUserAndLikeEntity = (EventEntity & {user: UserEntity, Like: LikeEntity[]})
-
 type EventWithUserEntity = (EventEntity & {user: UserEntity})
 
 export {
@@ -38,7 +36,6 @@ export {
     type EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     type EventWithUserAndLikeAndStaticEntity,
     type EventWithUserAndStaticEntity,
-    type EventWithUserAndLikeEntity,
     type EventWithStaticEntity,
     type EventWithUserEntity
 }

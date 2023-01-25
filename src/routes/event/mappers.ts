@@ -1,7 +1,7 @@
 import {
     EventWithUserAndLikeAndsStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
-    EventWithUserAndLikeEntity, EventWithUserAndStaticEntity
+    EventWithUserAndStaticEntity
 } from '../../infrastructure/repositories/event/types'
 import {Event} from '../../model/event'
 import {GetEventsEventDto} from './schemes/getEvents'
@@ -86,7 +86,7 @@ function mapEventsWithUserEntityToGetLikedEventsDto(
 }
 
 function mapEventWithUserAndLikeEntityToGetMyEventsDto(
-    event: EventWithUserAndLikeEntity,
+    event: EventWithUserAndLikeAndStaticEntity,
     userId: string
 ): GetLikedEventsDto {
     const likedUserIds = event.Like.map(like => like.user_id)
@@ -98,6 +98,7 @@ function mapEventWithUserAndLikeEntityToGetMyEventsDto(
         start: event.start,
         duration: event.duration,
         price: event.price || undefined,
+        image: event.EventStatic.length && event.EventStatic[0] ? event.EventStatic[0].static_path : undefined,
         participants_count: event.participants_count,
         is_like_set: likedUserIds.includes(userId)
     }
