@@ -1,4 +1,12 @@
-import {Event as EventEntity, Like as LikeEntity, User as UserEntity, EventStatic as EventStaticEntity} from '@prisma/client'
+import {
+    Event as EventEntity,
+    Like as LikeEntity,
+    User as UserEntity,
+    EventStatic as EventStaticEntity,
+    EventTag as EventTagEntity,
+    EventLink as EventLinkEntity,
+    Tag as TagEntity
+} from '@prisma/client'
 
 interface GetEventsOptions {
     withUser?: boolean,
@@ -6,6 +14,10 @@ interface GetEventsOptions {
 }
 
 type EventWithUserAndLikeAndStaticEntity = (EventEntity & {user: UserEntity, Like: LikeEntity[], EventStatic: EventStaticEntity[]})
+
+type EventWithStaticAndTagAndLinkEntity = (EventEntity & {EventStatic: EventStaticEntity[], EventTag: (EventTagEntity & {tag: TagEntity})[], EventLink: EventLinkEntity[]})
+
+type EventWithStaticEntity = (EventEntity & {EventStatic: EventStaticEntity[]})
 
 type EventWithUserAndLikeEntity = (EventEntity & {user: UserEntity, Like: LikeEntity[]})
 
@@ -16,7 +28,9 @@ export {
     type LikeEntity,
 
     type GetEventsOptions,
+    type EventWithStaticAndTagAndLinkEntity,
     type EventWithUserAndLikeAndStaticEntity,
     type EventWithUserAndLikeEntity,
+    type EventWithStaticEntity,
     type EventWithUserEntity
 }

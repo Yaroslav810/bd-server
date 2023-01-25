@@ -1,5 +1,5 @@
 import {
-    EventEntity,
+    EventWithStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndLikeEntity,
     EventWithUserEntity
@@ -33,7 +33,7 @@ function mapEventWithUserAndLikeEntityToGetEventsEventDto(
 }
 
 function mapEventEntityToGetEventDto(
-    event: EventEntity,
+    event: EventWithStaticAndTagAndLinkEntity,
     userName: string,
     is_like_set: boolean
 ): GetEventDto {
@@ -46,6 +46,9 @@ function mapEventEntityToGetEventDto(
         duration: event.duration,
         price: event.price || undefined,
         participants_count: event.participants_count,
+        image: event.EventStatic.length && event.EventStatic[0] ? event.EventStatic[0].static_path : undefined,
+        links: event.EventLink.map(link => link.link),
+        tags: event.EventTag.map(tag => tag.tag.tag),
         is_like_set
     }
 }

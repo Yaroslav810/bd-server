@@ -2,6 +2,7 @@ import {PrismaContextType} from '../../context'
 import {BaseRepository} from '../base'
 import {
     EventEntity,
+    EventWithStaticAndTagAndLinkEntity,
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndLikeEntity,
     EventWithUserEntity,
@@ -85,10 +86,19 @@ class EventRepository extends BaseRepository {
         })
     }
 
-    async getEvent(eventId: string): Promise<EventEntity | null> {
+    async getEvent(eventId: string): Promise<EventWithStaticAndTagAndLinkEntity | null> {
         return await this.dbContext.event.findUnique({
             where: {
                 event_id: eventId
+            },
+            include: {
+                EventStatic: true,
+                EventTag: {
+                    include: {
+                        tag: true
+                    }
+                },
+                EventLink: true
             }
         })
     }

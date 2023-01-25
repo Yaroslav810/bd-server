@@ -7,6 +7,9 @@ interface GetEventDto {
     duration: number,
     price?: number,
     participants_count: number,
+    image?: string,
+    links: string[],
+    tags: string[],
     is_like_set: boolean,
 }
 
