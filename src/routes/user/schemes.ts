@@ -20,7 +20,7 @@ const registrationScheme = {
             login: {type: 'string'},
             first_name: {type: 'string'},
             last_name: {type: 'string'},
-            birth_date: {type: 'string', format: 'date'},
+            birth_date: {type: 'string'},
             password: {type: 'string'},
             type: {
                 type: 'string',
