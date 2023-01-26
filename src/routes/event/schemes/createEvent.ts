@@ -14,6 +14,7 @@ type CreateEventDto = {
     start: Date,
     duration: number,
     price: number,
+    participantsCount: number,
     links: string[],
     tags: string[],
     image?: File,

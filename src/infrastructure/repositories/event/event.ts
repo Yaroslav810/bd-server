@@ -24,7 +24,7 @@ class EventRepository extends BaseRepository {
                 duration: event.duration,
                 user_id: userId,
                 price: event.price,
-                participants_count: 0,
+                participants_count: event.participantsCount,
                 EventTag: {
                     create: event.tags?.map(tag => ({
                         tag: {
@@ -79,7 +79,7 @@ class EventRepository extends BaseRepository {
                 duration: event.duration,
                 user_id: userId,
                 price: event.price,
-                participants_count: 0,
+                participants_count: event.participantsCount,
                 EventTag: {
                     create: event.tags?.map(tag => ({
                         tag: {

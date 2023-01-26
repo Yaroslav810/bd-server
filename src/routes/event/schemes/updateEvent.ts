@@ -14,6 +14,7 @@ type UpdateEventDto = {
     description?: string,
     start: Date,
     duration: number,
+    participantsCount: number,
     price: number,
     links: string[],
     tags: string[],
