@@ -6,10 +6,10 @@ import {
     getEvents,
     getLikedEvents,
     getUserEvents, removeEvent,
-    removeLike
+    removeLike, updateEvent
 } from '../../modules/event/actions'
 import {FastifyRequest} from 'fastify/types/request'
-import {mapCreateEventDtoToEvent} from './mappers'
+import {mapCreateEventDtoToEvent, mapUpdateEventDtoToEvent} from './mappers'
 import {getUser, verifyUser} from '../common/utils'
 import {CreateEventDto, createEventsScheme} from './schemes/createEvent'
 import {getEventsScheme} from './schemes/getEvents'
@@ -19,6 +19,7 @@ import {removeLikeScheme} from './schemes/removeLike'
 import {getLikedEventScheme} from './schemes/getLikedEvents'
 import {getMyEventsScheme} from './schemes/getMyEvents'
 import {deleteEventScheme} from './schemes/deleteEvent'
+import {UpdateEventDto, updateEventsScheme} from './schemes/updateEvent'
 
 function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Error) => void) {
 
@@ -45,6 +46,16 @@ function event(fastify: FastifyInstance, _: RegistrationOptions, done: (err?: Er
         const image = (request.body as {image: File | null}).image
         const event = mapCreateEventDtoToEvent(data as CreateEventDto, image)
         return await createEvent(event, userId)
+    })
+
+    fastify.post('/update', {
+        schema: updateEventsScheme
+    }, async (request: FastifyRequest) => {
+        const userId = verifyUser(request, fastify)
+        const data = JSON.parse((request.body as {data: string}).data) as UpdateEventDto
+        const image = (request.body as {image: File | null}).image
+        const event = mapUpdateEventDtoToEvent(data as UpdateEventDto, image)
+        return await updateEvent(event, userId)
     })
 
     fastify.post('/delete/:id', {

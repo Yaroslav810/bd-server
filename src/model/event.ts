@@ -21,8 +21,23 @@ interface Event {
     image: File | null,
 }
 
+interface EventWithId {
+    id: string,
+    title: string,
+    description: string | null,
+    start: Date,
+    duration: number,
+    price: number,
+    links: string[] | null,
+    tags: string[] | null,
+    detailed: EventDetailed[] | null,
+    items: EventItem[] | null,
+    image: File | null,
+}
+
 export {
     type EventDetailed,
     type EventItem,
-    type Event
+    type Event,
+    type EventWithId
 }

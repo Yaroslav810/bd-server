@@ -3,11 +3,12 @@ import {
     EventWithUserAndLikeAndStaticEntity,
     EventWithUserAndStaticEntity
 } from '../../infrastructure/repositories/event/types'
-import {Event} from '../../model/event'
+import {Event, EventWithId} from '../../model/event'
 import {GetEventsEventDto} from './schemes/getEvents'
 import {GetEventDto} from './schemes/getEvent'
 import {CreateEventDto} from './schemes/createEvent'
 import {GetLikedEventsDto} from './schemes/getLikedEvents'
+import {UpdateEventDto} from './schemes/updateEvent'
 
 function mapEventWithUserAndLikeEntityToGetEventsEventDto(
     event: EventWithUserAndLikeAndStaticEntity,
@@ -49,7 +50,9 @@ function mapEventEntityToGetEventDto(
         image: event.EventStatic.length && event.EventStatic[0] ? event.EventStatic[0].static_path : undefined,
         links: event.EventLink.map(link => link.link),
         tags: event.EventTag.map(tag => tag.tag.tag),
-        is_like_set: userId ? userIdLikes.includes(userId) : false
+        is_like_set: userId ? userIdLikes.includes(userId) : false,
+        is_can_delete: userId === event.user.user_id,
+        is_can_edit: userId === event.user.user_id
     }
 }
 
@@ -64,6 +67,22 @@ function mapCreateEventDtoToEvent(createEventDto: CreateEventDto, image: File | 
         tags: createEventDto.tags || null,
         detailed: createEventDto.detailed || null,
         items: createEventDto.items || null,
+        image: image ?? null
+    }
+}
+
+function mapUpdateEventDtoToEvent(updateEventDto: UpdateEventDto, image: File | null): EventWithId {
+    return {
+        id: updateEventDto.id,
+        title: updateEventDto.title,
+        description: updateEventDto.description || null,
+        start: updateEventDto.start,
+        duration: updateEventDto.duration,
+        price: updateEventDto.price,
+        links: updateEventDto.links || null,
+        tags: updateEventDto.tags || null,
+        detailed: updateEventDto.detailed || null,
+        items: updateEventDto.items || null,
         image: image ?? null
     }
 }
@@ -108,6 +127,7 @@ export {
     mapEventWithUserAndLikeEntityToGetEventsEventDto,
     mapEventEntityToGetEventDto,
     mapCreateEventDtoToEvent,
+    mapUpdateEventDtoToEvent,
     mapEventsWithUserEntityToGetLikedEventsDto,
     mapEventWithUserAndLikeEntityToGetMyEventsDto
 }

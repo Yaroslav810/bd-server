@@ -8,7 +8,7 @@ import {
     GetEventsOptions,
     LikeEntity
 } from './types'
-import {Event} from '../../../model/event'
+import {Event, EventWithId} from '../../../model/event'
 
 class EventRepository extends BaseRepository {
     constructor(dbContext: PrismaContextType) {
@@ -67,6 +67,54 @@ class EventRepository extends BaseRepository {
         })
     }
 
+    async udpate(event: EventWithId, userId: string): Promise<EventEntity> {
+        return await this.dbContext.event.update({
+            where: {
+                event_id: event.id
+            },
+            data: {
+                title: event.title,
+                description: event.description,
+                start: event.start,
+                duration: event.duration,
+                user_id: userId,
+                price: event.price,
+                participants_count: 0,
+                EventTag: {
+                    create: event.tags?.map(tag => ({
+                        tag: {
+                            create: {
+                                tag
+                            }
+                        }
+                    }))
+                },
+                EventLink: {
+                    create: event.links?.map(link => ({
+                        link
+                    }))
+                },
+                EventDetailed: {
+                    create: event.detailed?.map((detailed, index) => ({
+                        title: detailed.title,
+                        description: detailed.description,
+                        order: index
+                    }))
+                },
+                ItemForEvent: {
+                    create: event.items?.map(item => ({
+                        item: {
+                            create: {
+                                title: item.title,
+                                description: item.description
+                            }
+                        }
+                    }))
+                }
+            }
+        })
+    }
+
     async delete(eventId: string): Promise<EventEntity> {
         return await this.dbContext.event.delete({
             where: {
@@ -81,6 +129,9 @@ class EventRepository extends BaseRepository {
                 user: options.withUser,
                 Like: options.withLike,
                 EventStatic: true
+            },
+            orderBy: {
+                start: 'desc'
             }
         })
     }

@@ -11,6 +11,8 @@ interface GetEventDto {
     links: string[],
     tags: string[],
     is_like_set: boolean,
+    is_can_delete: boolean,
+    is_can_edit: boolean,
 }
 
 const getEventScheme = {}

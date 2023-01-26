@@ -5,7 +5,7 @@ import {
     mapEventsWithUserEntityToGetLikedEventsDto, mapEventWithUserAndLikeEntityToGetMyEventsDto
 } from '../../routes/event/mappers'
 import {sendForbidden, verifyExisting} from '../../../core/http/httpUtils'
-import {Event} from '../../model/event'
+import {Event, EventWithId} from '../../model/event'
 import {GetEventsEventDto} from '../../routes/event/schemes/getEvents'
 import {GetEventDto} from '../../routes/event/schemes/getEvent'
 import {GetLikedEventsDto} from '../../routes/event/schemes/getLikedEvents'
@@ -23,9 +23,13 @@ async function createEvent(event: Event, userId: string): Promise<boolean> {
         }
 
         title = await createImage(event.image)
-        console.log(userId)
     }
     await provider.event.create(event, userId, title)
+    return true
+}
+
+async function updateEvent(event: EventWithId, userId: string): Promise<boolean> {
+    await provider.event.udpate(event, userId)
     return true
 }
 
@@ -95,5 +99,6 @@ export {
     addLike,
     removeLike,
     getLikedEvents,
-    getUserEvents
+    getUserEvents,
+    updateEvent
 }
